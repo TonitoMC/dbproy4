@@ -51,5 +51,7 @@ Dentro de /database/ esta todo lo de la DB, factories y seeders son solo para la
 
 Entonces para los views / triggers / funciones es crear migracion -> ir al archivo y modificarlo para ejecutar el SQL -> tocar modelos de ser necesario
 
+Algunas ordenes los totales y eso no estan calculados, el resto estan joya. Tambien las categorias tienen como subcategorias por eso tienen llave foranea hacia otras, tomenlo en cuenta
+
 ### Front (Puerto 5173)
 Es un proyecto vacío de React con Vite, lo único es que la pantalla por default tira un ping al backend para ver que si jale.
