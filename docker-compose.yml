@@ -39,6 +39,16 @@ services:
       php artisan serve --host=0.0.0.0 --port=8000
       "
 
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: db4front
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/usr/src/app:Z
+      - /usr/src/app/node_modules
   postgres:
     image: postgres:17
     container_name: db4db
