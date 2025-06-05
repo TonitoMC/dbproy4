@@ -15,6 +15,7 @@ return new class extends Migration
             $table->string('email')->unique()->notNull();
             $table->string('phone')->nullable();
             $table->boolean('is_active')->default(false);
+            $table->timestamps();
         });
 
         Schema::create('roles', function (Blueprint $table) {
@@ -129,6 +130,7 @@ return new class extends Migration
             $table->foreignId('product_id')->constrained('products')->onDelete('cascade');
             $table->foreignId('warehouse_id')->constrained('warehouses')->onDelete('cascade');
             $table->integer('quantity')->notNull()->default(0);
+            $table->integer('reserved_quantity')->default(0);
             $table->unique(['product_id', 'warehouse_id']);
         });
 

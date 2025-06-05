@@ -12,7 +12,7 @@ return new class extends Migration
     {
         // FUNCIÓN 1: Calcular el total de un carrito
         DB::unprepared("
-            CREATE OR REPLACE FUNCTION calculate_cart_total(cart_id INT)
+            CREATE OR REPLACE FUNCTION calculate_cart_total(cart_id BIGINT)
             RETURNS NUMERIC(10,2) AS $$
             DECLARE
                 total NUMERIC(10,2) := 0;
@@ -30,7 +30,7 @@ return new class extends Migration
 
         // FUNCIÓN 2: Obtener stock disponible de un producto
         DB::unprepared("
-            CREATE OR REPLACE FUNCTION get_available_stock(prod_id INT)
+            CREATE OR REPLACE FUNCTION get_available_stock(prod_id BIGINT)
             RETURNS INT AS $$
             DECLARE
                 available_stock INT := 0;
@@ -47,7 +47,7 @@ return new class extends Migration
 
         // FUNCIÓN 3: Calcular el margen de ganancia de un producto
         DB::unprepared("
-            CREATE OR REPLACE FUNCTION calculate_product_margin(prod_id INT)
+            CREATE OR REPLACE FUNCTION calculate_product_margin(prod_id BIGINT)
             RETURNS NUMERIC(5,2) AS $$
             DECLARE
                 selling_price NUMERIC(10,2);
@@ -73,7 +73,7 @@ return new class extends Migration
 
         // FUNCIÓN 4: Contar productos activos por marca
         DB::unprepared("
-            CREATE OR REPLACE FUNCTION count_active_products_by_brand(brand_id INT)
+            CREATE OR REPLACE FUNCTION count_active_products_by_brand(brand_id BIGINT)
             RETURNS INT AS $$
             DECLARE
                 product_count INT := 0;
@@ -89,7 +89,7 @@ return new class extends Migration
 
         // FUNCIÓN 5: Obtener el proveedor primario de un producto
         DB::unprepared("
-            CREATE OR REPLACE FUNCTION get_primary_supplier_name(prod_id INT)
+            CREATE OR REPLACE FUNCTION get_primary_supplier_name(prod_id BIGINT)
             RETURNS VARCHAR AS $$
             DECLARE
                 supplier_name VARCHAR := 'Sin proveedor primario';
@@ -112,10 +112,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        DB::unprepared("DROP FUNCTION IF EXISTS calculate_cart_total(INT)");
-        DB::unprepared("DROP FUNCTION IF EXISTS get_available_stock(INT)");
-        DB::unprepared("DROP FUNCTION IF EXISTS calculate_product_margin(INT)");
-        DB::unprepared("DROP FUNCTION IF EXISTS count_active_products_by_brand(INT)");
-        DB::unprepared("DROP FUNCTION IF EXISTS get_primary_supplier_name(INT)");
+        DB::unprepared("DROP FUNCTION IF EXISTS calculate_cart_total(BIGINT)");
+        DB::unprepared("DROP FUNCTION IF EXISTS get_available_stock(BIGINT)");
+        DB::unprepared("DROP FUNCTION IF EXISTS calculate_product_margin(BIGINT)");
+        DB::unprepared("DROP FUNCTION IF EXISTS count_active_products_by_brand(BIGINT)");
+        DB::unprepared("DROP FUNCTION IF EXISTS get_primary_supplier_name(BIGINT)");
     }
 };
