@@ -1,0 +1,7 @@
+.table-container{
+    margin: 1rem;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 6px 6px 9px -1px rgba(0,0,0,0.75);
+    background-color: #424242;
+}
