@@ -195,4 +195,170 @@ class ProductController
         $status = $product->is_active ? 'activado' : 'desactivado';
         return ApiResponseClass::respondWithJSON($product, "Producto {$status} exitosamente");
     }
+
+    /**
+     * Attach suppliers to product
+     */
+    public function attachSuppliers(Request $request, string $id): JsonResponse
+    {
+        $product = Product::find($id);
+        
+        if (!$product) {
+            return ApiResponseClass::respondWithJSON(null, 'Producto no encontrado', 404);
+        }
+
+        $validatedData = $request->validate([
+            'suppliers' => 'required|array|min:1',
+            'suppliers.*.supplier_id' => 'required|exists:suppliers,id',
+            'suppliers.*.cost_price' => 'required|numeric|min:0|max:999999.99',
+            'suppliers.*.is_primary' => 'boolean',
+        ]);
+
+        DB::beginTransaction();
+        try {
+            // Preparar datos para el attach
+            $suppliersData = [];
+            foreach ($validatedData['suppliers'] as $supplier) {
+                $suppliersData[$supplier['supplier_id']] = [
+                    'cost_price' => $supplier['cost_price'],
+                    'is_primary' => $supplier['is_primary'] ?? false,
+                ];
+            }
+
+            $product->suppliers()->attach($suppliersData);
+            $product->load(['suppliers']);
+            
+            DB::commit();
+            return ApiResponseClass::respondWithJSON($product, 'Proveedores agregados exitosamente');
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            return ApiResponseClass::respondWithJSON(null, 'Error agregando proveedores', 500);
+        }
+    }
+
+    /**
+     * Detach suppliers from product
+     */
+    public function detachSuppliers(Request $request, string $id): JsonResponse
+    {
+        $product = Product::find($id);
+        
+        if (!$product) {
+            return ApiResponseClass::respondWithJSON(null, 'Producto no encontrado', 404);
+        }
+
+        $validatedData = $request->validate([
+            'supplier_ids' => 'required|array|min:1',
+            'supplier_ids.*' => 'required|exists:suppliers,id',
+        ]);
+
+        DB::beginTransaction();
+        try {
+            $product->suppliers()->detach($validatedData['supplier_ids']);
+            $product->load(['suppliers']);
+            
+            DB::commit();
+            return ApiResponseClass::respondWithJSON($product, 'Proveedores removidos exitosamente');
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            return ApiResponseClass::respondWithJSON(null, 'Error removiendo proveedores', 500);
+        }
+    }
+
+    /**
+     * Update supplier pivot data
+     */
+    public function updateSupplier(Request $request, string $id, string $supplierId): JsonResponse
+    {
+        $product = Product::find($id);
+        
+        if (!$product) {
+            return ApiResponseClass::respondWithJSON(null, 'Producto no encontrado', 404);
+        }
+
+        // Verificar que el supplier esté asociado al producto
+        if (!$product->suppliers()->where('supplier_id', $supplierId)->exists()) {
+            return ApiResponseClass::respondWithJSON(null, 'Proveedor no está asociado a este producto', 404);
+        }
+
+        $validatedData = $request->validate([
+            'cost_price' => 'sometimes|required|numeric|min:0|max:999999.99',
+            'is_primary' => 'sometimes|boolean',
+        ]);
+
+        DB::beginTransaction();
+        try {
+            $product->suppliers()->updateExistingPivot($supplierId, $validatedData);
+            $product->load(['suppliers']);
+            
+            DB::commit();
+            return ApiResponseClass::respondWithJSON($product, 'Información del proveedor actualizada exitosamente');
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            return ApiResponseClass::respondWithJSON(null, 'Error actualizando información del proveedor', 500);
+        }
+    }
+
+    /**
+     * Attach categories to product
+     */
+    public function attachCategories(Request $request, string $id): JsonResponse
+    {
+        $product = Product::find($id);
+        
+        if (!$product) {
+            return ApiResponseClass::respondWithJSON(null, 'Producto no encontrado', 404);
+        }
+
+        $validatedData = $request->validate([
+            'category_ids' => 'required|array|min:1',
+            'category_ids.*' => 'required|exists:categories,id',
+        ]);
+
+        DB::beginTransaction();
+        try {
+            $product->categories()->attach($validatedData['category_ids']);
+            $product->load(['categories']);
+            
+            DB::commit();
+            return ApiResponseClass::respondWithJSON($product, 'Categorías agregadas exitosamente');
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            return ApiResponseClass::respondWithJSON(null, 'Error agregando categorías', 500);
+        }
+    }
+
+    /**
+     * Detach categories from product
+     */
+    public function detachCategories(Request $request, string $id): JsonResponse
+    {
+        $product = Product::find($id);
+        
+        if (!$product) {
+            return ApiResponseClass::respondWithJSON(null, 'Producto no encontrado', 404);
+        }
+
+        $validatedData = $request->validate([
+            'category_ids' => 'required|array|min:1',
+            'category_ids.*' => 'required|exists:categories,id',
+        ]);
+
+        DB::beginTransaction();
+        try {
+            $product->categories()->detach($validatedData['category_ids']);
+            $product->load(['categories']);
+            
+            DB::commit();
+            return ApiResponseClass::respondWithJSON($product, 'Categorías removidas exitosamente');
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            return ApiResponseClass::respondWithJSON(null, 'Error removiendo categorías', 500);
+        }
+    }
 }
