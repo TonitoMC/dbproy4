@@ -15,9 +15,49 @@ class UserController
      */
     public function index(): JsonResponse
     {
-        $users = User::all();
+        $users = User::with(['carts.items.product', 'orders', 'reviews', 'roles'])
+            ->get()
+            ->map(function ($user) {
+                $totalCartValue = $user->carts->sum(function ($cart) {
+                    return $cart->items->sum(function ($item) {
+                        return $item->quantity * $item->product->price;
+                    });
+                });
+
+                $totalCartItems = $user->carts->sum(function ($cart) {
+                    return $cart->items->sum('quantity');
+                });
+
+                return [
+                    'id' => $user->id,
+                    'name' => $user->name,
+                    'email' => $user->email,
+                    'is_active' => $user->is_active,
+                    'total_carts' => $user->carts->count(),
+                    'total_orders' => $user->orders->count(),
+                    'total_reviews' => $user->reviews->count(),
+                    'total_cart_value' => $totalCartValue,
+                    'total_cart_items' => $totalCartItems,
+                    'user_roles' => $user->roles->pluck('name')->implode(', '),
+
+                    'carts' => $user->carts->map(function($cart) {
+                        return [
+                            'id' => $cart->id,
+                            'created_at' => $cart->created_at,
+                            'items_count' => $cart->items->count(),
+                            'total' => $cart->items->sum(function ($item) {
+                                return $item->quantity * $item->product->price;
+                            }),
+                        ];
+                    }),
+                    'orders' => $user->orders,
+                    'reviews' => $user->reviews,
+                ];
+            });
+
         return ApiResponseClass::respondWithJSON($users, '');
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -47,12 +87,49 @@ class UserController
      */
     public function show(string $id): JsonResponse
     {
-        $user = User::find($id);
+        $user = User::with(['carts.items.product', 'orders', 'reviews', 'roles'])->find($id);
+
         if (!$user) {
             return ApiResponseClass::respondWithJSON(null, 'Usuario no encontrado', 404);
         }
 
-        return ApiResponseClass::respondWithJSON($user, 'Usuario encontrado exitosamente');
+        $totalCartValue = $user->carts->sum(function ($cart) {
+            return $cart->items->sum(function ($item) {
+                return $item->quantity * $item->product->price;
+            });
+        });
+
+        $totalCartItems = $user->carts->sum(function ($cart) {
+            return $cart->items->sum('quantity');
+        });
+
+        $result = [
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'is_active' => $user->is_active,
+            'total_carts' => $user->carts->count(),
+            'total_orders' => $user->orders->count(),
+            'total_reviews' => $user->reviews->count(),
+            'total_cart_value' => $totalCartValue,
+            'total_cart_items' => $totalCartItems,
+            'user_roles' => $user->roles->pluck('name')->implode(', '),
+
+            'carts' => $user->carts->map(function($cart) {
+                return [
+                    'id' => $cart->id,
+                    'created_at' => $cart->created_at,
+                    'items_count' => $cart->items->count(),
+                    'total' => $cart->items->sum(function ($item) {
+                        return $item->quantity * $item->product->price;
+                    }),
+                ];
+            }),
+            'orders' => $user->orders,
+            'reviews' => $user->reviews,
+        ];
+
+        return ApiResponseClass::respondWithJSON($result, 'Usuario encontrado exitosamente');
     }
 
     /**
