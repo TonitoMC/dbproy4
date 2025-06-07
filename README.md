@@ -1,57 +1,35 @@
 # Proyecto 4
-- /docs/ para el diagrama ERD
-- /backend/ para el backend en Laravel (si lo separe perdon)
-- /frontend/ para el frontend en React
-  
-## Hecho
+## Descripcion
+Este proyecto consta de una base de datos en Postgres implementada utilizando Laravel / Eloquent, la base de datos soporta operciones basicas para manejar odenes, usuarios e inventario de un E-Commerce. Cuenta con dos CRUDs, uno para usuarios y otro para productos implementados completamente desde Eloquent. Dentro del proyecto utilizamos Laravel para manejar un backend en HTTP y desarrollamos un frontend en React.
 
-- Diseño de la base de datos
-- Creación dentro de Eloquent
-- Inserción de datos de prueba
+## Ubicacion de Archivos
 
-## Pendiente:
+- /backend/ los archivos del proyecto de Laravel
+- /frontend/ frontend en React
+- /docs/ la documentacion de la base de datos como el diagrama ERD
 
-- Triggers / Funciones
-- Views
-- CRUDs
-- Frontend
-
-## Correr
-Con Docker se tiene hot-reloading en el front y en el back, pueden solo correr el contenedor con esto y van a poder hacer cambios que se reflejen de inmediato:
+## Correr el Proyecto
+Para correr el proyecto unicamente es necesario correr el siguiente comando para levantar los contenedores de docker
 ```
 docker compose up --build
 ```
-Para bajar el contenedor les sugiero que usen este comando para quitar volumenes y eso
+Luego recomendamos bajar el contenedor con
 ```
 docker compose down -v
 ```
 
-## Estrucutra
-Separé backend y frontend porque se me hizo un dolor no tener hot reloading en el front y no lo pude configurar dentro de Laravel, perdon si les quedaba mas facil. 
-### Backend (Puerto 8000)
-**CRUDs**
-- /app/Http
-  - /Controllers
-    - Hay uno ya predefinido, pero aqui van los CRUDs / todo el funcionamiento interno
-  - /Models
-    - Aqui estan todos los modelos para ver los campos y eso
-- Routes
-   - Aqui definen las rutas, ya esta configurado CORS y eso pero solo es mandar los requests al controlador
+## Estructura Backend
 
-Entonces para hacer los CRUDs es hacer el controlador en HTTP/controllers y poner las rutas en /routes/
+- database/models
+  - Los modelos utilizados para representar las entidades / tablas de la base de datos
+ 
+- database/seeders
+  - Los scripts de insercion de datos por medio del ORM
+ 
+- database/factories
+  - Herramientas de utilidad para generar datos variados para su insercion dentro de la base de datos
 
-**DB**
-
-Dentro de /database/ esta todo lo de la DB, factories y seeders son solo para la insercion de datos. Las inserciones en algunos puntos se caen a pedazos pero lo voy a terminar de ver.
-
-- /app/migrations
-  - Las migraciones de la DB, hay un comando para crear una nueva migracion vacia donde pueden tirar SQL puro para los views
-- /app/models
-  - Aqui se pueden definir los views directamente si no estoy mal
-
-Entonces para los views / triggers / funciones es crear migracion -> ir al archivo y modificarlo para ejecutar el SQL -> tocar modelos de ser necesario
-
-Algunas ordenes los totales y eso no estan calculados, el resto estan joya. Tambien las categorias tienen como subcategorias por eso tienen llave foranea hacia otras, tomenlo en cuenta
-
-### Front (Puerto 5173)
-Es un proyecto vacío de React con Vite, lo único es que la pantalla por default tira un ping al backend para ver que si jale.
+- database/migrations
+   - Las migraciones dentro de la base de datos, las migraciones se corren en orden y el nombre describe lo que se implementa
+ 
+## Screenshots
