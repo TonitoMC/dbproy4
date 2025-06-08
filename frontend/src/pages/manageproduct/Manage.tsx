@@ -110,7 +110,19 @@ const Products = () => {
     },
     {
       name: "Precio",
-      selector: (row: Manage) => row.price,
+      cell: (row: Manage) =>
+        editingId === row.id ? (
+          <input
+            type="number"
+            value={editForm?.price}
+            onChange={(e) =>
+              setEditForm({ ...editForm!, price: e.target.value })
+            }
+            style={{ width: "100px" }}
+          />
+        ) : (
+          row.price
+        ),
       sortable: true,
       width: "150px",
     },
