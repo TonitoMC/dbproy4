@@ -1,0 +1,82 @@
+.home-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 80vh;
+  padding: 2rem;
+}
+
+.home-card {
+  background-color: #424242;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  padding: 2rem;
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
+  border: 1px solid #3b82f6;
+}
+
+.home-icon {
+  color: #3b82f6;
+  margin-bottom: 1rem;
+}
+
+.home-title {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #dddddd;
+  margin-bottom: 1rem;
+}
+
+.home-description {
+  font-size: 1rem;
+  color: #cecece;
+  margin-bottom: 1.5rem;
+  text-align: justify;
+}
+
+.home-features {
+  display: flex;
+  justify-content: space-around;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.home-feature {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #cccccc;
+  font-size: 0.95rem;
+}
+
+.home-footer {
+  font-size: 0.8rem;
+  color: #cccccc;
+}
+
+.home-participants {
+  margin: 1.2rem 0;
+  text-align: center;
+}
+
+.home-participants h2 {
+  font-size: 1.2rem;
+  color: #dddddd;
+  margin-bottom: 0.5rem;
+}
+
+.home-participants ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.home-participants li {
+  font-size: 0.95rem;
+  color: #cccccc;
+  margin: 4px 0;
+}
+
