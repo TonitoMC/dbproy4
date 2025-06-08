@@ -36,6 +36,8 @@ docker compose down -v
 ### Productos
 - Agregando un producto
   <img src="https://github.com/TonitoMC/dbproy4/blob/main/frontend/src/assets/img/postProduct.png" alt="agregando producto">
+- Agregando un producto
+  <img src="https://github.com/TonitoMC/dbproy4/blob/main/frontend/src/assets/img/ProductoAgregado.png" alt="Producto agregado">
 - Obteniendo los productos
   <img src="https://github.com/TonitoMC/dbproy4/blob/main/frontend/src/assets/img/getProducts.png" alt="obteniendo productos">
 - Editando un producto
