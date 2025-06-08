@@ -33,3 +33,22 @@ docker compose down -v
    - Las migraciones dentro de la base de datos, las migraciones se corren en orden y el nombre describe lo que se implementa
  
 ## Screenshots
+### Productos
+- Agregando un producto
+  <img src="https://github.com/TonitoMC/dbproy4/blob/main/frontend/src/assets/img/postProduct.png" alt="agregando producto">
+- Obteniendo los productos
+  <img src="https://github.com/TonitoMC/dbproy4/blob/main/frontend/src/assets/img/getProducts.png" alt="obteniendo productos">
+- Editando un producto
+  <img src="https://github.com/TonitoMC/dbproy4/blob/main/frontend/src/assets/img/putProduct.png" alt="editando producto">
+- Eliminando un producto
+  <img src="https://github.com/TonitoMC/dbproy4/blob/main/frontend/src/assets/img/deleteProduct.png" alt="eliminando producto">
+
+### Usuarios
+- Agregando un usuario
+  <img src="https://github.com/TonitoMC/dbproy4/blob/main/frontend/src/assets/img/postUser.png" alt="agregando usuario">
+- Obteniendo los usuarios
+  <img src="https://github.com/TonitoMC/dbproy4/blob/main/frontend/src/assets/img/getUsers.png" alt="obteniendo usuarios">
+- Editando un usuario
+  <img src="https://github.com/TonitoMC/dbproy4/blob/main/frontend/src/assets/img/putUser.png" alt="editando usuario">
+- Eliminando un usuario
+  <img src="https://github.com/TonitoMC/dbproy4/blob/main/frontend/src/assets/img/deleteUser.png" alt="eliminando usuario">
