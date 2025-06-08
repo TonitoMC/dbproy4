@@ -27,3 +27,6 @@ Route::patch('products/{id}/suppliers/{supplierId}', [ProductController::class, 
 // Gestión de categories  
 Route::post('products/{id}/categories', [ProductController::class, 'attachCategories']);
 Route::delete('products/{id}/categories', [ProductController::class, 'detachCategories']);
+
+// Category routes
+Route::get('/categories', [CategoryController::class, 'index']);

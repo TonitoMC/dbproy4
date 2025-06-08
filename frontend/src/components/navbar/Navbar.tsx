@@ -1,7 +1,7 @@
 // src/components/Navbar.tsx
-import { NavLink } from "react-router";
-import { Home, User, ShoppingBagIcon } from "lucide-react";
+import { Edit, Home, Plus, ShoppingBagIcon, User } from "lucide-react";
 import { type ReactNode } from "react";
+import { NavLink } from "react-router";
 import "./Navbar.css";
 
 type NavItem = {
@@ -13,6 +13,8 @@ type NavItem = {
 const navItems: NavItem[] = [
   { label: "Home", to: "/", icon: <Home size={20} /> },
   { label: "Products", to: "/products", icon: <ShoppingBagIcon size={20} /> },
+  { label: "Add Products", to: "/addproduct", icon: <Plus size={20} /> },
+  { label: "Manage Products", to: "/manageproduct", icon: <Edit size={20} /> },
   { label: "Users", to: "/users", icon: <User size={20} /> },
 ];
 

@@ -22,3 +22,15 @@ export interface Product {
   brand: Brand;
   categories: Category[];
 }
+
+export interface Manage {
+  id: number;
+  name: string;
+  description: string;
+  price: string;
+  is_active: boolean;
+  brand: Brand;
+  categories: Category[];
+  edit: boolean;
+  delete: boolean;
+}
