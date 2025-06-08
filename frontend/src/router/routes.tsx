@@ -5,6 +5,8 @@ import Homepage from "../pages/homepage/Homepage";
 import Manage from "../pages/manageproduct/Manage";
 import Products from "../pages/products/Products";
 import Users from "../pages/users/Users";
+import AddUser from "../pages/addUser/addUser"
+import ManageUser from "../pages/manageUser/ManageUser"
 
 const routes: RouteObject[] = [
   {
@@ -27,6 +29,14 @@ const routes: RouteObject[] = [
     path: "/addproduct",
     element: <Add />,
   },
+  {
+    path: "/adduser",
+    element: <AddUser/>,
+  },
+  {
+    path: "/manageuser",
+    element: <ManageUser/>,
+  }
 ];
 
 export function AppRoutes() {

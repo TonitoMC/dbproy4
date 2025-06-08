@@ -1,4 +1,5 @@
 import { useState } from "react";
+import axios from "axios";
 
 type Category = { id: number; name: string };
 
